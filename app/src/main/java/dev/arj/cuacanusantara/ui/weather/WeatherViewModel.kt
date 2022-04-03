@@ -18,15 +18,15 @@ class WeatherViewModel(private val useCase: WeatherUseCase) : ViewModel() {
         get() = _weatherState
 
     fun fetchCurrentWeather(latitude: String, longitude: String) {
-        _weatherState.value.loading = true
+        _weatherState.value = ViewState(loading = true)
 
         viewModelScope.launch {
             useCase.fetchCurrentWeather(latitude, longitude)
                 .catch { throwable ->
-                    _weatherState.value.errorMessage = throwable.message
+                    _weatherState.value = ViewState(errorMessage = throwable.message)
                 }
                 .collect { response ->
-                    _weatherState.value.success = response
+                    _weatherState.value = ViewState(success = response)
                 }
         }
     }
