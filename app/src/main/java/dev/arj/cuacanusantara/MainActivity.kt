@@ -1,6 +1,7 @@
 package dev.arj.cuacanusantara
 
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import dev.arj.cuacanusantara.databinding.ActivityMainBinding
@@ -15,6 +16,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setupFullScreen()
+
         binding = DataBindingUtil.setContentView<ActivityMainBinding?>(this, R.layout.activity_main)
             .apply {
                 lifecycleOwner = this@MainActivity
@@ -23,5 +26,12 @@ class MainActivity : AppCompatActivity() {
 
 
         viewModel.fetchCurrentWeather("-6.216774", "106.523054")
+    }
+
+    private fun setupFullScreen() {
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
     }
 }
