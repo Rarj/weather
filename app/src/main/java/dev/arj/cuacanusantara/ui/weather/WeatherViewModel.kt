@@ -13,20 +13,20 @@ import kotlinx.coroutines.launch
 
 class WeatherViewModel(private val useCase: WeatherUseCase) : ViewModel() {
 
-    private var _weatherState = MutableStateFlow(ViewState<WeatherResponse>())
-    val weatherState: StateFlow<ViewState<WeatherResponse>>
+    private var _weatherState: MutableStateFlow<ViewState<WeatherResponse>?> = MutableStateFlow(null)
+    val weatherState: StateFlow<ViewState<WeatherResponse>?>
         get() = _weatherState
 
     fun fetchCurrentWeather(latitude: String, longitude: String) {
-        _weatherState.value = ViewState(loading = true)
+        _weatherState.value = ViewState.Loading()
 
         viewModelScope.launch {
             useCase.fetchCurrentWeather(latitude, longitude)
                 .catch { throwable ->
-                    _weatherState.value = ViewState(errorMessage = throwable.message)
+                    _weatherState.value = ViewState.Error(throwable.message)
                 }
                 .collect { response ->
-                    _weatherState.value = ViewState(success = response)
+                    _weatherState.value = ViewState.Success(response)
                 }
         }
     }

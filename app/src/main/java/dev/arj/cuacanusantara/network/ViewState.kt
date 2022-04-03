@@ -1,7 +1,11 @@
 package dev.arj.cuacanusantara.network
 
-data class ViewState<T>(
-    var loading: Boolean = false,
-    var success: T? = null,
-    var errorMessage: String? = null
-)
+sealed class ViewState<T>(
+    val data: T? = null,
+    val message: String? = null
+) {
+    class Loading<T> : ViewState<T>()
+    class Success<T>(response: T?) : ViewState<T>(response)
+    class Error<T>(errorMessage: String?) : ViewState<T>(message = errorMessage)
+
+}
