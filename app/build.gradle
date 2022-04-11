@@ -49,6 +49,7 @@ ext {
     lifecycle_version = "2.4.1"
     retrofit_version = "2.9.0"
     koin_version = "3.1.5"
+    location_version = "19.0.1"
 }
 
 dependencies {
@@ -71,6 +72,8 @@ dependencies {
 
     implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
     implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
+
+    implementation "com.google.android.gms:play-services-location:"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
