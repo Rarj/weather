@@ -13,4 +13,8 @@ data class WeatherResponse(
     val temperature: Temperature,
     @SerializedName("dt")
     val currentDateTime: Int
-)
+) {
+    fun getFullDescription(): String {
+        return "${locationName}\n${weather[0].description}"
+    }
+}

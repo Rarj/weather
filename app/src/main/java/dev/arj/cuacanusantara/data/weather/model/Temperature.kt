@@ -12,4 +12,9 @@ data class Temperature(
     val tempMax: Double,
     @SerializedName("temp_min")
     val tempMin: Double
-)
+) {
+    fun getTemperatureInCelsius(): String {
+        val degree = String.format("%.1f", temp - 273.15)
+        return "${degree}°C"
+    }
+}

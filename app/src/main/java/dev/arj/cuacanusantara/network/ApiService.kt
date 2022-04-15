@@ -11,6 +11,7 @@ interface ApiService {
     suspend fun getCurrentWeather(
         @Query("lat") latitude: String,
         @Query("lon") longitude: String,
+        @Query("lang") language: String = "id",
         @Query("appid") api_key: String = BuildConfig.API_KEY
     ): WeatherResponse
 
