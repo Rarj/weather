@@ -1,9 +1,11 @@
 package dev.arj.cuacanusantara.ui.weather
 
 import android.Manifest
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
-import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,11 +13,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.google.android.gms.location.LocationServices
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import dev.arj.cuacanusantara.R
 import dev.arj.cuacanusantara.databinding.FragmentWeatherBinding
+import dev.arj.cuacanusantara.service.LocationService
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class WeatherFragment : Fragment() {
@@ -84,7 +88,23 @@ class WeatherFragment : Fragment() {
                 )
             }
         } else {
-            getLocation()
+            val serviceIntent = Intent(context, LocationService::class.java)
+            context?.let {
+                ContextCompat.startForegroundService(it, serviceIntent)
+
+                LocalBroadcastManager.getInstance(it).registerReceiver(
+                    broadcastReceiverLocation, IntentFilter("GPSLocationUpdates")
+                )
+            }
+        }
+    }
+
+    private val broadcastReceiverLocation = object : BroadcastReceiver() {
+        override fun onReceive(ctx: Context?, intent: Intent?) {
+            val latitude = intent?.getStringExtra("lat")
+            val longitude = intent?.getStringExtra("long")
+
+            viewModel.fetchCurrentWeather(latitude.toString(), longitude.toString())
         }
     }
 
@@ -94,25 +114,22 @@ class WeatherFragment : Fragment() {
         grantResults: IntArray
     ) {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            getLocation()
+            val serviceIntent = Intent(context, LocationService::class.java)
+            context?.let {
+                ContextCompat.startForegroundService(it, serviceIntent)
+
+                LocalBroadcastManager.getInstance(it).registerReceiver(
+                    broadcastReceiverLocation, IntentFilter("GPSLocationUpdates")
+                )
+            }
         } else {
             Toast.makeText(context, "Izinkan untuk mengakses lokasi", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun getLocation() {
-        val mFusedLocationClient = activity?.let {
-            LocationServices.getFusedLocationProviderClient(it)
-        }
+    override fun onStop() {
+        super.onStop()
 
-        activity?.let {
-            mFusedLocationClient?.lastLocation?.addOnCompleteListener(it) { task ->
-                val location: Location? = task.result
-                if (location != null) {
-                    viewModel.fetchCurrentWeather(location.latitude.toString(), location.longitude.toString())
-                }
-            }
-        }
+        activity?.stopService(Intent(context, LocationService::class.java))
     }
-
 }
