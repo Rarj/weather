@@ -1,4 +1,4 @@
-package dev.arj.cuacanusantara.ui
+package dev.arj.cuacanusantara.ui.weather
 
 import android.Manifest
 import android.content.Context
@@ -15,18 +15,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.google.android.gms.location.LocationServices
 import dev.arj.cuacanusantara.R
-import dev.arj.cuacanusantara.databinding.FragmentHomeBinding
-import dev.arj.cuacanusantara.ui.weather.WeatherViewModel
+import dev.arj.cuacanusantara.databinding.FragmentWeatherBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment : Fragment() {
+class WeatherFragment : Fragment() {
 
     companion object {
         const val requestCodeLocation = 100
     }
 
     private val viewModel by viewModel<WeatherViewModel>()
-    private lateinit var binding: FragmentHomeBinding
+    private lateinit var binding: FragmentWeatherBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,11 +33,11 @@ class HomeFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(
             layoutInflater,
-            R.layout.fragment_home,
+            R.layout.fragment_weather,
             container,
             false
         )
-        binding.lifecycleOwner = this@HomeFragment
+        binding.lifecycleOwner = this@WeatherFragment
         binding.viewModel = this.viewModel
 
         return binding.root

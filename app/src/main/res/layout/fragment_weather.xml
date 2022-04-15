@@ -13,7 +13,7 @@
         android:background="@drawable/bg"
         android:backgroundTint="@color/cream"
         android:backgroundTintMode="multiply"
-        tools:context=".ui.HomeFragment">
+        tools:context=".ui.weather.WeatherFragment">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_search"
