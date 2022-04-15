@@ -1,94 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
-    <data>
-        <variable
-            name="viewModel"
-            type="dev.arj.cuacanusantara.ui.weather.WeatherViewModel" />
-    </data>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg"
-        android:backgroundTint="@color/cream"
-        android:backgroundTintMode="multiply"
-        tools:context=".MainActivity">
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/nav_graph" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_search"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="64dp"
-            android:layout_margin="20dp"
-            android:backgroundTint="#6A1B1818"
-            android:gravity="start|center_vertical"
-            android:hint="Cari tahu cuaca lainnya..."
-            app:cornerRadius="10dp"
-            android:textColorHint="@android:color/darker_gray"
-            app:icon="@drawable/ic_search"
-            app:iconPadding="16dp"
-            app:iconTint="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/image_weather"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@drawable/rounded_corner_bg"
-            android:layout_margin="20dp"
-            app:layout_constraintVertical_weight="3"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/sunny"
-            app:layout_constraintBottom_toTopOf="@id/text_temp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_search"
-            tools:src="@tools:sample/avatars" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/text_temp"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/rounded_corner_bg"
-            android:gravity="center"
-            android:padding="20dp"
-            android:text="@{viewModel.weatherState.data.temperature.temperatureInCelsius}"
-            android:textColor="#FFFFFF"
-            android:textSize="40sp"
-            app:layout_constraintVertical_weight="1"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/text_description"
-            app:layout_constraintTop_toBottomOf="@id/image_weather"
-            tools:text="99,9°C" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/text_description"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/rounded_corner_bg"
-            android:gravity="center"
-            android:lineSpacingExtra="5dp"
-            android:padding="8dp"
-            android:text="@{viewModel.weatherState.data.fullDescription}"
-            android:textSize="20sp"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/text_temp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/text_temp"
-            tools:text="Tangerang,\nSedikit berawan" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>
