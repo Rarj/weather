@@ -18,6 +18,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.navigation.findNavController
 import dev.arj.cuacanusantara.R
 import dev.arj.cuacanusantara.databinding.FragmentWeatherBinding
 import dev.arj.cuacanusantara.network.ViewState
@@ -61,6 +62,10 @@ class WeatherFragment : Fragment() {
         }
 
         setAnimationWeather()
+
+        binding.buttonSearch.setOnClickListener {
+            it.findNavController().navigate(R.id.action_home_to_search)
+        }
     }
 
     private fun setAnimationWeather() {
@@ -147,9 +152,4 @@ class WeatherFragment : Fragment() {
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-
-        activity?.stopService(Intent(context, LocationService::class.java))
-    }
 }
