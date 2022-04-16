@@ -4,6 +4,7 @@ import dev.arj.cuacanusantara.data.weather.repo.WeatherRepository
 import dev.arj.cuacanusantara.data.weather.source.WeatherRemoteDataSource
 import dev.arj.cuacanusantara.domain.weather.usecase.WeatherUseCase
 import dev.arj.cuacanusantara.network.NetworkBuilder
+import dev.arj.cuacanusantara.ui.search.SearchViewModel
 import dev.arj.cuacanusantara.ui.weather.WeatherViewModel
 import org.koin.dsl.module
 
@@ -22,4 +23,5 @@ val domainModule = module {
 
 val viewModelModule = module {
     single { WeatherViewModel(get()) }
+    single { SearchViewModel(get()) }
 }

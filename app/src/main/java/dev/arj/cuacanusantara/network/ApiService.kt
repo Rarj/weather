@@ -15,4 +15,11 @@ interface ApiService {
         @Query("appid") api_key: String = BuildConfig.API_KEY
     ): WeatherResponse
 
+    @GET("weather")
+    suspend fun getCurrentWeatherByQuery(
+        @Query("q") query: String,
+        @Query("lang") language: String = "id",
+        @Query("appid") api_key: String = BuildConfig.API_KEY
+    ): WeatherResponse
+
 }

@@ -15,4 +15,8 @@ class WeatherUseCase(
     ): Flow<WeatherUiModel> {
         return weatherRepository.fetchCurrentWeather(latitude, longitude)
     }
+
+    override suspend fun fetchCurrentWeatherByQuery(text: String): Flow<WeatherUiModel> {
+        return weatherRepository.fetchCurrentWeatherByQuery(text)
+    }
 }

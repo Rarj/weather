@@ -2,7 +2,6 @@ package dev.arj.cuacanusantara.data.weather.repo
 
 import dev.arj.cuacanusantara.data.weather.mapper.weather.WeatherUiModel
 import dev.arj.cuacanusantara.data.weather.mapper.weather.mapToUiModel
-import dev.arj.cuacanusantara.data.weather.model.WeatherResponse
 import dev.arj.cuacanusantara.data.weather.source.WeatherRemoteDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -19,6 +18,14 @@ class WeatherRepository(
     ): Flow<WeatherUiModel> {
         return flow {
             val response = remoteDataSource.fetchCurrentWeather(latitude, longitude)
+
+            emit(response.mapToUiModel())
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun fetchCurrentWeatherByQuery(text: String): Flow<WeatherUiModel> {
+        return flow {
+            val response = remoteDataSource.fetchCurrentWeatherByQuery(text)
 
             emit(response.mapToUiModel())
         }.flowOn(Dispatchers.IO)

@@ -5,4 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface WeatherRepositoryInterface {
     suspend fun fetchCurrentWeather(latitude: String, longitude: String): Flow<WeatherUiModel>
+    suspend fun fetchCurrentWeatherByQuery(text: String): Flow<WeatherUiModel>
 }
