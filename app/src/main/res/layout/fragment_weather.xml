@@ -82,6 +82,7 @@
             android:lineSpacingExtra="5dp"
             android:drawableStart="@drawable/ic_location"
             android:paddingStart="16dp"
+            android:maxLines="1"
             android:paddingEnd="16dp"
             android:textColor="#FFFFFF"
             android:text="@{viewModel.weatherState.data.locationName}"
