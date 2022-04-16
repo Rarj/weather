@@ -46,7 +46,6 @@
             app:layout_constraintVertical_weight="3"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            app:lottie_rawRes="@raw/sunny"
             tools:src="@tools:sample/avatars" />
 
         <com.google.android.material.textview.MaterialTextView

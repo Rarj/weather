@@ -16,10 +16,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import dev.arj.cuacanusantara.R
 import dev.arj.cuacanusantara.databinding.FragmentWeatherBinding
+import dev.arj.cuacanusantara.network.ViewState
 import dev.arj.cuacanusantara.service.LocationService
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class WeatherFragment : Fragment() {
@@ -54,6 +58,22 @@ class WeatherFragment : Fragment() {
             checkLocationPermission()
         } else {
             Toast.makeText(context, "Aktifkan lokasi", Toast.LENGTH_SHORT).show()
+        }
+
+        setAnimationWeather()
+    }
+
+    private fun setAnimationWeather() {
+        lifecycleScope.launch {
+            viewModel.weatherState.collect { state ->
+                when (state) {
+                    is ViewState.Success -> {
+                        state.data?.getStatusWeatherAnimation()?.let { rawRes ->
+                            binding.imageWeather.setAnimation(rawRes)
+                        }
+                    }
+                }
+            }
         }
     }
 
