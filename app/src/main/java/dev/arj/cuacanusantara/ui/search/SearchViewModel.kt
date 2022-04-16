@@ -1,15 +1,12 @@
 package dev.arj.cuacanusantara.ui.search
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.arj.cuacanusantara.data.weather.mapper.weather.WeatherUiModel
 import dev.arj.cuacanusantara.domain.weather.usecase.WeatherUseCase
 import dev.arj.cuacanusantara.network.ViewState
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class SearchViewModel(private val useCase: WeatherUseCase) : ViewModel() {
@@ -18,7 +15,7 @@ class SearchViewModel(private val useCase: WeatherUseCase) : ViewModel() {
     val weatherState: StateFlow<ViewState<WeatherUiModel>?>
         get() = _weatherState
 
-    fun fetchCurrentWeatherByQuery(text: String) {
+    suspend fun fetchCurrentWeatherByQuery(text: String) = flow<WeatherUiModel> {
         _weatherState.value = ViewState.Loading()
 
         viewModelScope.launch {
@@ -30,6 +27,6 @@ class SearchViewModel(private val useCase: WeatherUseCase) : ViewModel() {
                     _weatherState.value = ViewState.Success(response)
                 }
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
 }
