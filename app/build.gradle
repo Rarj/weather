@@ -48,7 +48,7 @@ ext {
     fragment_version = "1.4.1"
     lifecycle_version = "2.4.1"
     retrofit_version = "2.9.0"
-    logging_version = "3.0.1"
+    logging_version = "4.9.3"
     koin_version = "3.1.5"
     location_version = "19.0.1"
     lottie_version = "5.0.3"
@@ -78,7 +78,7 @@ dependencies {
 
     implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
     implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
+    implementation("com.squareup.okhttp3:logging-interceptor:$logging_version")
 
     implementation("com.google.android.gms:play-services-location:$location_version")
 
