@@ -7,11 +7,14 @@ fun WeatherResponse.mapToUiModel(): WeatherUiModel {
     val iconUrl = "https://openweathermap.org/img/wn/${weather.icon}.png"
 
     return WeatherUiModel(
-        weather.id,
-        iconUrl,
-        locationName,
-        getFullDescription(locationName, weather.description),
-        getTemperatureInCelsius(temperature.temp)
+        weatherId = weather.id,
+        iconUrl = iconUrl,
+        locationName = locationName,
+        fullDescription = getFullDescription(locationName, weather.description),
+        temperature = getTemperatureInCelsius(temperature.temp),
+        windSpeed = "${wind.speed} KM/h",
+        visibility = "${visibility / 1000} KM",
+        humidity = "${temperature.humidity}%",
     )
 }
 

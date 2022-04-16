@@ -79,4 +79,7 @@ data class WeatherUiModel(
     val locationName: String,
     val fullDescription: String,
     val temperature: String,
+    val windSpeed: String,
+    val visibility: String,
+    val humidity: String
 ) : StatusWeather(weatherId)
