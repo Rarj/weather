@@ -74,7 +74,10 @@ class WeatherFragment : Fragment() {
                 when (state) {
                     is ViewState.Success -> {
                         state.data?.getStatusWeatherAnimation()?.let { rawRes ->
-                            binding.imageWeather.setAnimation(rawRes)
+                            binding.imageWeather.apply {
+                                setAnimation(rawRes)
+                                playAnimation()
+                            }
                         }
                     }
                 }
